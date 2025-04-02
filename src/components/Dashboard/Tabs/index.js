@@ -6,6 +6,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { ThemeProvider, createTheme } from "@mui/material";
 import Grid from "../Grid";
 import "./styles.css";
+import List from "../List";
 
 export default function TabsComponent({ coins, isWatchlistPage, setSearch }) {
   const [value, setValue] = useState("grid");
@@ -44,15 +45,13 @@ export default function TabsComponent({ coins, isWatchlistPage, setSearch }) {
           </div>
         </TabPanel>
         <TabPanel value="list">
-          <div>
+          <table className="list-table">
             {coins.map((item, i) => {
               return (
-                <p>
-                  {i + 1}.{item.id}
-                </p>
+                <List coin={item} key={i}/>
               );
             })}
-          </div>
+          </table>
         </TabPanel>
       </TabContext>
     </ThemeProvider>
