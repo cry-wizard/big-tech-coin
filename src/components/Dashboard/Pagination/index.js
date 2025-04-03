@@ -1,27 +1,32 @@
-import React from "react";
-import Pagination from "@mui/material/Pagination";
+import React, { useState } from "react";
 import "./styles.css";
 
-export default function PaginationComponents({page,handlePageChange}) {
+import Pagination from "@mui/material/Pagination";
 
-
+export default function PaginationControlled({ page, handlePageChange }) {
   return (
     <div className="pagination-div">
-      <Pagination count={10} page={page} onChange={(event,value)=>handlePageChange(event,value)} sx={{
-        color:"var(--white)",
-        "& .Mui-selected":{
-            backgroundColor:"var(--blue) !important",
+      <Pagination
+        sx={{
+          "& .MuiPaginationItem-text": {
             color: "#fff !important",
-            borderColor:"var(--blue) !important",
-        },
-        "& .MuiPaginationItem-ellipsis":{
-            border:"0px solid var(--grey) !important",
-        },
-        "& .MuiPaginationItem-text":{
-            color:"var(--white)",
-            border:"1px solid var(--grey)",
-        },
-      }} />
+            border: "1px solid var(--grey)",
+          },
+          "& .MuiPaginationItem-text:hover": {
+            backgroundColor: "transparent !important",
+          },
+          "& .Mui-selected  ": {
+            backgroundColor: "var(--blue)",
+            borderColor: "var(--blue)",
+          },
+          "& .MuiPaginationItem-ellipsis": {
+            border: "none",
+          },
+        }}
+        count={10}
+        page={page}
+        onChange={handlePageChange}
+      />
     </div>
   );
 }

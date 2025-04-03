@@ -1,122 +1,125 @@
-.flex-info{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 0.5rem 3rem;
+.main-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 3rem;
 }
 
-.track-crypto , .real-time-crypto{
-    font-size: 6.5rem;
-    margin: 0;
+.heading1,
+.heading2 {
+  font-size: 6rem;
+  margin: 0;
 }
 
-.track-crypto{
-    color: var(--white);
-    -webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: var(--white);
+.heading1:hover {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: var(--white);
+  color: var(--black);
+  transition: all 0.3s;
 }
 
-.track-crypto:hover{
-    color: var(--black);
-    -webkit-text-stroke-width: 4px;
-    -webkit-text-stroke-color: var(--goldenOrange);
-    transition: all 0.3s;
+.heading2 {
+  color: var(--blue);
 }
 
-
-.real-time-crypto{
-    color: var(--goldenOrange);
+.info-text {
+  color: var(--grey);
+  font-weight: 300;
 }
 
-.info-text{
- color: var(--grey);
- font-size: 1rem;
+.btn-flex {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.btn-flex{
-    display: flex;
-    justify-content: flex-start;
-    gap:1.5rem;
-    align-items: center;
-    margin-top: 2.5rem;
+.gradient-div {
+  position: relative;
+  width: 50%;
+  margin-left: auto;
 }
 
-.phone-container{
-    width: 50%;
-    position: relative;
-    padding: 1rem;
+.gradient {
+  position: absolute;
+  right: -50px; 
+  top: 50px; 
+  width: 400px; 
+  height: 400px; 
+}
+.iphone {
+  position: absolute;
+  right: 10px;
+  width: 300px;
 }
 
-.iphone{
-    position: absolute;
-    z-index: 100;
-    min-width: 300px;
-    width: 50%;
-    right: 0;
-}
-.gradient{
-    position: absolute;
-    min-width: 250px;
-    width: 40%;
-    top: 8rem;
-    right: 0;
-}
-.happy{
-    width: 15%;
+@media only screen and (max-width: 1350px) {
+  .heading1,
+  .heading2 {
+    font-size: 5rem;
+  }
 }
 
-@media only screen and (max-width: 1250px){
-    .track-crypto , .real-time-crypto{
-        font-size: 5rem;
-        margin: 0;
-    }
-}
-
-@media only screen and (max-width: 1000px){
-    .iphone{
-        min-width: 250px;
-        right: 0;
-    }
-    .gradient{
-        min-width: 200px;
-        top: 6rem;
-    }
-    .happy{
-        width: 9%;
-    }
-    
-}
-
-@media only screen and (max-width: 800px){
- .flex-info{
-    flex-direction: column;
- }
- .phone-container{
-    display: block;
-    margin: auto;
-    margin-top: 2rem;
- }
- .iphone{
-    left: -2rem;
- }
- .gradient{
-    left: 35%;
- }
- .left-component{
-    width: 100%;
- }
- .track-crypto,
- .real-time-crypto{
+@media only screen and (max-width: 1050px) {
+  .heading1,
+  .heading2 {
     font-size: 4rem;
-    text-align: center;
- }
- .info-text{
-    text-align: center;
- }
- .btn-flex{
-   justify-content: center;
- }
- .track-crypto{
-    -webkit-text-stroke-width: 1.5px;
- }
+  }
+
+  .gradient {
+    right: 0px;
+    top: 60px;
+    width: 200px;
+  }
+  .iphone {
+    right: 0px;
+    width: 250px;
+  }
 }
+
+@media only screen and (max-width: 800px) {
+  .heading1,
+  .heading2 {
+    font-size: 2rem;
+  }
+  .main-flex {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .heading1,
+  .heading2,
+  .info-text {
+    text-align: center;
+  }
+
+  .info-text {
+    font-size: 0.8rem;
+  }
+
+  .btn-flex {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .gradient-div {
+    margin-top: 3rem;
+    margin-right: auto;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .gradient,
+  .iphone {
+    left: 0px;
+  }
+
+  .iphone {
+    left: -30px;
+  }
+}
+
+/* 
+clamp(minFontSize, ratio, maxFontSize)
+  formula to calculate the ratio
+  (max-size/design width) * 100
+  example: (70/1440)*100 */

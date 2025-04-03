@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-const Search = ({search,onSearchChange}) => {
+import SearchIcon from "@mui/icons-material/Search";
+
+function Search({ search, handleChange }) {
   return (
     <div className="search-flex">
-      <SearchRoundedIcon />
+      <SearchIcon sx={{ color: "var(--grey)", fontSize: "1.2rem" }} />
       <input
+        className="search-input"
         placeholder="Search"
-        type="text"
         value={search}
-        onChange={(e) => onSearchChange(e)}
+        onChange={(e) => handleChange(e)}
       />
     </div>
   );
-};
+}
 
 export default Search;

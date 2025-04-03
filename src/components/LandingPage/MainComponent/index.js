@@ -1,69 +1,79 @@
-import React from 'react'
-import "./styles.css";
+import React from "react";
 import Button from "../../Common/Button";
-import iphone from "../../../assets/iphone.png";
+import "./styles.css";
 import gradient from "../../../assets/gradient.png";
-import happy from "../../../assets/happy.png";
-import { motion } from 'framer-motion';
+import iphone from "../../../assets/iphone.png";
+import { motion } from "framer-motion";
+import { RWebShare } from "react-web-share";
+import { toast } from "react-toastify";
 
-const Maincomponent = () => {
+function MainComponent() {
   return (
-    <div className='flex-info'>
-      <div className='left-component'>
-        <motion.h1 className='track-crypto'
-        initial={{opacity:0,y:50}}
-        animate={{opacity:1, y:0}}
-        transition={{duration:1.5}}
+    <div className="main-flex">
+      <div className="info-landing">
+        <motion.h1
+          className="heading1"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 1 }}
         >
-        Track Crypto</motion.h1>
-        <motion.h1 className='real-time-crypto'
-        initial={{opacity:0,y:50}}
-        animate={{opacity:1, y:0}}
-        transition={{duration:1.5, delay:0.5}}
-        >Real Time.</motion.h1>
-        <motion.p className='info-text'
-        initial={{opacity:0,y:50}}
-        animate={{opacity:1, y:0}}
-        transition={{duration:1.5, delay:0.9}}
+          Track Crypto
+        </motion.h1>
+        <motion.h1
+          className="heading2"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.75, duration: 1 }}
         >
-          Track crypto through a public api in real time. Visit the dashboard to do so!
+          Real Time.
+        </motion.h1>
+        <motion.p
+          className="info-text"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1, duration: 1 }}
+        >
+          Track crypto through a public api in real time. Visit the dashboard to
+          do so!{" "}
         </motion.p>
-        <motion.div className='btn-flex'
-        initial={{opacity:0,x:50}}
-        animate={{opacity:1, x:0}}
-        transition={{duration:1.5, delay:0.5}}
+        <motion.div
+          className="btn-flex"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.25, duration: 0.75 }}
         >
-          <Button text={"Dashboard"}/>
-          <Button text={"share"} outlined={true}/>
-          <motion.img src={happy} className='happy' alt='Happy'
-          initial={{rotateY:"0deg"}}
-          animate={{rotateY:"360deg"}}
-          transition={{
-            type:"smooth",
-            repeatType:"mirror",
-            duration:3.5,
-            repeat:Infinity,
-          }}
-
-          />
+          <a href="/dashboard">
+            <Button text={"Dashboard"} />
+          </a>
+          <RWebShare
+            data={{
+              text: "CryptoDashboard made by Avi Vashishta using React JS.",
+              url: "https://crypto-dashboard-jan.netlify.app",
+              title: "CryptoTracker.",
+            }}
+            onClick={() => toast.info("App Shared!")}
+          >
+            <Button text={"Share App"} outlined={true} />
+          </RWebShare>
         </motion.div>
-
       </div>
-      <div className='phone-container'>
-        <motion.img src={iphone} className='iphone' alt="iPhone displaying the app"
-          initial={{y:-20}}
-          animate={{y:20}}
+      <div className="gradient-div">
+        <img src={gradient} className="gradient" />
+        <motion.img
+          src={iphone}
+          className="iphone"
+          initial={{ y: -20 }}
+          animate={{ y: 20 }}
           transition={{
-            type:"smooth",
-            repeatType:"mirror",
-            duration:2,
-            repeat:Infinity,
+            type: "smooth",
+            repeatType: "mirror",
+            duration: 2,
+            repeat: Infinity,
           }}
         />
-        <img src={gradient} className='gradient' alt="Gradient background"/>
       </div>
     </div>
-  )
+  );
 }
 
-export default Maincomponent
+export default MainComponent;

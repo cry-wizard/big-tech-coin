@@ -1,11 +1,14 @@
 .list-row {
+  width: 90%;
+  padding: 1rem 2rem;
+  margin-bottom: 0.5rem !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1.5rem;
-  margin: 1.5rem;
-  padding: 1rem;
-  border-radius: 0.9rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0.8rem;
+  cursor: pointer;
 }
 
 .list-row:hover {
@@ -14,48 +17,84 @@
 }
 
 .list-row td {
+  width: 20%;
   text-align: left;
-  width: 18%;
 }
 
-.td-image {
+.td-img {
   width: 3rem !important;
-  margin-right: 1.7rem;
+  margin-right: 1rem;
 }
 
-.td-right-align {
-  text-align: right;
-}
-.td-center-align {
-  text-align: center;
+.td-info {
+  width: 10rem !important;
 }
 
-.mobile-td-mkt{
-    display: none;
+.td-current-price {
+  width: 6rem !important;
+  text-align: right !important;
 }
 
-@media only screen and (max-width: 1100px) {
-  .td-icon {
+.td-totalVolume,
+.td-marketCap {
+  text-align: right !important;
+}
+
+.mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 900px) {
+  .td-chip-icon {
     display: none;
   }
-}
-@media only screen and (max-width: 1000px) {
+
   .list-row td {
-    font-size: 80% !important;
+    font-size: 0.7rem;
   }
-  .td-total-volume {
+
+  .td-totalVolume {
     display: none;
+  }
+
+  .td-current-price {
+    text-align: center !important;
+  }
+
+  .list-row {
+    width: 100%;
+    padding: 1.5rem 0rem;
+  }
+
+  .coin-image-td {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .td-info {
+    width: 6rem !important;
   }
 }
-@media only screen and (max-width: 800px) {
-  .desktop-td-mkt {
-    display: none;
+@media only screen and (max-width: 600px) {
+  .td-marketCap,
+  .td-chip-icon {
+    display: none !important;
   }
-  .mobile-td-mkt{
-    display: block;
+  .mobile {
+    display: block !important;
+    text-align: left !important;
   }
-  .list-row{
-    padding: 0.5rem;
-    width: 75vw;
+  .list-row td,
+  .td-p {
+    font-size: 0.6rem !important;
+  }
+
+  .td-info {
+    width: 4rem !important;
+  }
+
+  .coin-image-td {
+    height: 2rem !important;
+    width: 2rem !important;
   }
 }

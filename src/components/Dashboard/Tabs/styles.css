@@ -1,19 +1,21 @@
-.grid-flex{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1.75rem;
-    margin: 1.5rem 3rem;
+.grid-flex {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1rem;
 }
-.list-table{
-    width: 87%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+
+.list-flex {
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-@media only screen and (max-width:1200px) {
-    .list-table{
-        width: 95%;
-    }
+
+@media only screen and (max-width: 600px) {
+  .list-flex {
+    width: 100%;
+  }
 }
