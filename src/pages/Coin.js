@@ -16,7 +16,7 @@ import { settingCoinObject } from "../functions/settingCoinObject";
 function Coin() {
   const { id } = useParams();
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState({ labels: [], datasets: [{}] });
   const [coin, setCoin] = useState(null);
   const [days, setDays] = useState(30);
@@ -26,33 +26,28 @@ function Coin() {
     if (id) {
       getData();
     }
-  }, [id, days, priceType]); // Added dependencies for re-fetching data when days or priceType changes
+  }, [id, days, priceType]); // Corrected dependencies for re-fetching data when necessary
 
   const getData = async () => {
+    setLoading(true);
+    setError(false);
+    
     try {
-      setLoading(true);
-      const coinData = await getCoinData(id, setError);
+      const coinData = await getCoinData(id);
       if (!coinData) throw new Error("Coin data not found");
 
       settingCoinObject(coinData, setCoin);
 
-      const prices = await getPrices(id, days, priceType, setError);
+      const prices = await getPrices(id, days, priceType);
       if (prices) {
         settingChartData(setChartData, prices);
       }
     } catch (err) {
+      console.error("Error fetching data:", err);
       setError(true);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDaysChange = async (event) => {
-    setDays(event.target.value);
-  };
-
-  const handlePriceTypeChange = async (event) => {
-    setPriceType(event.target.value);
   };
 
   return (
@@ -64,11 +59,8 @@ function Coin() {
             <List coin={coin} delay={0.5} />
           </div>
           <div className="grey-wrapper">
-            <SelectDays handleDaysChange={handleDaysChange} days={days} />
-            <ToggleComponents
-              priceType={priceType}
-              handlePriceTypeChange={handlePriceTypeChange}
-            />
+            <SelectDays handleDaysChange={(e) => setDays(e.target.value)} days={days} />
+            <ToggleComponents priceType={priceType} handlePriceTypeChange={(e) => setPriceType(e.target.value)} />
             <LineChart chartData={chartData} />
           </div>
           <Info title={coin.name} desc={coin.desc} />
@@ -78,13 +70,7 @@ function Coin() {
           <h1 style={{ textAlign: "center" }}>
             Sorry, couldn't find the coin you're looking for 😞
           </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "2rem",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "center", margin: "2rem" }}>
             <Link to="/dashboard">
               <Button text="Dashboard" />
             </Link>

@@ -14,7 +14,8 @@ import { settingCoinObject } from "../functions/settingCoinObject";
 
 function Compare() {
   const [allCoins, setAllCoins] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   // Selected cryptocurrencies
   const [crypto1, setCrypto1] = useState("bitcoin");
@@ -27,18 +28,17 @@ function Compare() {
   // Chart settings
   const [days, setDays] = useState(30);
   const [priceType, setPriceType] = useState("prices");
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
     getData();
-  }, [crypto1, crypto2, days, priceType]); // Refetch data when these values change
+  }, [crypto1, crypto2, days, priceType]); // Fetch data only when dependencies change
 
   const getData = async () => {
+    setLoading(true);
+    setError(false);
+
     try {
-      setLoading(true);
       const coins = await get100Coins();
       if (!coins) throw new Error("Failed to fetch coin list");
 
@@ -53,35 +53,34 @@ function Compare() {
 
       const prices1 = await getPrices(crypto1, days, priceType);
       const prices2 = await getPrices(crypto2, days, priceType);
+
+      if (!prices1 || !prices2) throw new Error("Failed to fetch price data");
+
       settingChartData(setChartData, prices1, prices2);
     } catch (error) {
       console.error(error.message);
+      setError(true);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const onCoinChange = (e, isCoin2) => {
-    const newCrypto = e.target.value;
-    if (isCoin2) {
-      setCrypto2(newCrypto);
-    } else {
-      setCrypto1(newCrypto);
     }
   };
 
   return (
     <div>
       <Header />
-      {loading || !coin1Data || !coin2Data ? (
+      {loading ? (
         <Loader />
+      ) : error ? (
+        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+          <h1>⚠️ Unable to load data. Please try again later.</h1>
+        </div>
       ) : (
         <>
           <SelectCoins
             allCoins={allCoins}
             crypto1={crypto1}
             crypto2={crypto2}
-            onCoinChange={onCoinChange}
+            onCoinChange={(e, isCoin2) => (isCoin2 ? setCrypto2(e.target.value) : setCrypto1(e.target.value))}
             days={days}
             handleDaysChange={(e) => setDays(e.target.value)}
           />

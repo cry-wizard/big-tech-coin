@@ -6,13 +6,15 @@ import { get100Coins } from "../functions/get100Coins";
 
 function Watchlist() {
   const [coins, setCoins] = useState([]);
-  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  const [watchlist, setWatchlist] = useState(() => {
+    return JSON.parse(localStorage.getItem("watchlist")) || [];
+  });
 
   useEffect(() => {
     if (watchlist.length > 0) {
       getData();
     }
-  }, []); // No need to re-run this effect on state updates
+  }, [watchlist]); // Re-fetch when watchlist updates
 
   const getData = async () => {
     try {
