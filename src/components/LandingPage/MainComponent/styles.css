@@ -48,6 +48,7 @@
 }
 .iphone {
   position: absolute;
+  top: 50px; 
   right: 10px;
   width: 300px;
 }
@@ -118,8 +119,3 @@
   }
 }
 
-/* 
-clamp(minFontSize, ratio, maxFontSize)
-  formula to calculate the ratio
-  (max-size/design width) * 100
-  example: (70/1440)*100 */
