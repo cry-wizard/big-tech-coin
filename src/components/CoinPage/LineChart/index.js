@@ -1,12 +1,13 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto"; //Dont get rid of this
+// eslint-disable-next-line no-unused-vars
+import { Chart as ChartJS } from "chart.js/auto"; // Don't remove this; needed for ChartJS setup
 
 function LineChart({ chartData, multiAxis }) {
   const options = {
     plugins: {
       legend: {
-        display: multiAxis ? true : false,
+        display: Boolean(multiAxis), // Ensuring a boolean value for ESLint compliance
       },
     },
     responsive: true,
@@ -18,13 +19,17 @@ function LineChart({ chartData, multiAxis }) {
       crypto1: {
         position: "left",
       },
-      crypto2: multiAxis && {
-        position: "right",
-      },
+      ...(multiAxis
+        ? {
+            crypto2: {
+              position: "right",
+            },
+          }
+        : {}),
     },
   };
 
-  return <Line data={chartData} options={options} />;
+  return <Line data={chartData || { datasets: [] }} options={options} />;
 }
 
 export default LineChart;

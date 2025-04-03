@@ -1,14 +1,14 @@
 import { MenuItem, Select } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import "./styles.css";
 
 function SelectDays({ days, handleDaysChange, noPTag }) {
   return (
-    <div className="select-days" style={{ marginBottom: noPTag && "0" }}>
+    <div className="select-days" style={{ marginBottom: noPTag ? "0" : undefined }}>
       {!noPTag && <p>Price change in </p>}
       <Select
         value={days}
-        onChange={(e) => handleDaysChange(e)}
+        onChange={handleDaysChange} // No need for an extra function wrapper
         sx={{
           height: "2.5rem",
           color: "var(--white)",
@@ -25,12 +25,11 @@ function SelectDays({ days, handleDaysChange, noPTag }) {
           },
         }}
       >
-        <MenuItem value={7}>7 Days</MenuItem>
-        <MenuItem value={30}>30 Days</MenuItem>
-        <MenuItem value={60}>60 Days</MenuItem>
-        <MenuItem value={90}>90 Days</MenuItem>
-        <MenuItem value={120}>120 Days</MenuItem>
-        <MenuItem value={365}>1 Year</MenuItem>
+        {[7, 30, 60, 90, 120, 365].map((value) => (
+          <MenuItem key={value} value={value}>
+            {value === 365 ? "1 Year" : `${value} Days`}
+          </MenuItem>
+        ))}
       </Select>
     </div>
   );

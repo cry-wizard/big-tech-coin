@@ -2,23 +2,34 @@ import { toast } from "react-toastify";
 
 export const removeItemToWatchlist = (e, id, setIsCoinAdded) => {
   e.preventDefault();
-  if (window.confirm("Are you sure you want to remove this coin?")) {
-    let watchlist = JSON.parse(localStorage.getItem("watchlist"));
-    const newList = watchlist.filter((coin) => coin != id);
-    setIsCoinAdded(false);
-    localStorage.setItem("watchlist", JSON.stringify(newList));
-    toast.success(
-      `${
-        id.substring(0, 1).toUpperCase() + id.substring(1)
-      } - has been removed!`
-    );
-    window.location.reload();
-  } else {
-    toast.error(
-      `${
-        id.substring(0, 1).toUpperCase() + id.substring(1)
-      } - could not be removed!`
-    );
-    setIsCoinAdded(true);
+
+  if (!id) {
+    toast.error("Invalid coin ID.");
+    return;
   }
+
+  if (!window.confirm("Are you sure you want to remove this coin?")) {
+    toast.info(`${capitalizeFirstLetter(id)} - was not removed.`);
+    return;
+  }
+
+  let watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  const newList = watchlist.filter((coin) => coin !== id);
+
+  if (watchlist.length === newList.length) {
+    toast.warning(`${capitalizeFirstLetter(id)} - is not in your watchlist.`);
+    return;
+  }
+
+  localStorage.setItem("watchlist", JSON.stringify(newList));
+  setIsCoinAdded(false);
+  toast.success(`${capitalizeFirstLetter(id)} - has been removed!`);
+  
+  // Avoid full page reload for better user experience
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
 };
+
+// Utility function to capitalize the first letter
+const capitalizeFirstLetter = (str) => str.charAt(0).toUpperCase() + str.slice(1);

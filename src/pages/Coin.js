@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Info from "../components/CoinPage/Info";
 import LineChart from "../components/CoinPage/LineChart";
 import SelectDays from "../components/CoinPage/SelectDays";
@@ -18,7 +18,7 @@ function Coin() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState({ labels: [], datasets: [{}] });
-  const [coin, setCoin] = useState({});
+  const [coin, setCoin] = useState(null);
   const [days, setDays] = useState(30);
   const [priceType, setPriceType] = useState("prices");
 
@@ -26,46 +26,39 @@ function Coin() {
     if (id) {
       getData();
     }
-  }, [id]);
+  }, [id, days, priceType]); // Added dependencies for re-fetching data when days or priceType changes
 
   const getData = async () => {
-    setLoading(true);
-    let coinData = await getCoinData(id, setError);
-    console.log("Coin DATA>>>>", coinData);
-    settingCoinObject(coinData, setCoin);
-    if (coinData) {
+    try {
+      setLoading(true);
+      const coinData = await getCoinData(id, setError);
+      if (!coinData) throw new Error("Coin data not found");
+
+      settingCoinObject(coinData, setCoin);
+
       const prices = await getPrices(id, days, priceType, setError);
       if (prices) {
         settingChartData(setChartData, prices);
-        setLoading(false);
       }
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDaysChange = async (event) => {
-    setLoading(true);
     setDays(event.target.value);
-    const prices = await getPrices(id, event.target.value, priceType, setError);
-    if (prices) {
-      settingChartData(setChartData, prices);
-      setLoading(false);
-    }
   };
 
   const handlePriceTypeChange = async (event) => {
-    setLoading(true);
     setPriceType(event.target.value);
-    const prices = await getPrices(id, days, event.target.value, setError);
-    if (prices) {
-      settingChartData(setChartData, prices);
-      setLoading(false);
-    }
   };
 
   return (
     <>
       <Header />
-      {!error && !loading && coin.id ? (
+      {!error && !loading && coin ? (
         <>
           <div className="grey-wrapper">
             <List coin={coin} delay={0.5} />
@@ -83,7 +76,7 @@ function Coin() {
       ) : error ? (
         <div>
           <h1 style={{ textAlign: "center" }}>
-            Sorry, Couldn't find the coin you're looking for 😞
+            Sorry, couldn't find the coin you're looking for 😞
           </h1>
           <div
             style={{
@@ -92,9 +85,9 @@ function Coin() {
               margin: "2rem",
             }}
           >
-            <a href="/dashboard">
+            <Link to="/dashboard">
               <Button text="Dashboard" />
-            </a>
+            </Link>
           </div>
         </div>
       ) : (
