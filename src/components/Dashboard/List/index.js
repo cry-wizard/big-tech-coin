@@ -23,7 +23,7 @@ function List({ coin, delay }) {
       >
         <Tooltip title="Coin Image">
           <td className="td-img">
-            <img src={coin.image} className="coin-image coin-image-td" />
+            <img src={coin.image} className="coin-image coin-image-td" alt="coin image" />
           </td>
         </Tooltip>
         <Tooltip title="Coin Info" placement="bottom-start">

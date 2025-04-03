@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../../Common/Button";
 import "./styles.css";
-import gradient from "../../../assets/gradient.png";
 import iphone from "../../../assets/iphone.png";
 import { motion } from "framer-motion";
 import { RWebShare } from "react-web-share";
@@ -10,6 +9,7 @@ import { toast } from "react-toastify";
 function MainComponent() {
   return (
     <div className="main-flex">
+      {/* Left Content */}
       <div className="info-landing">
         <motion.h1
           className="heading1"
@@ -33,8 +33,8 @@ function MainComponent() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          Track crypto through a public api in real time. Visit the dashboard to
-          do so!{" "}
+          Track crypto through a public API in real-time. Visit the dashboard to
+          do so!
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -57,11 +57,13 @@ function MainComponent() {
           </RWebShare>
         </motion.div>
       </div>
+
+      {/* Right Content with Gradient Background */}
       <div className="gradient-div">
-        <img src={gradient} className="gradient" />
         <motion.img
           src={iphone}
           className="iphone"
+          alt="iPhone Mockup"
           initial={{ y: -20 }}
           animate={{ y: 20 }}
           transition={{

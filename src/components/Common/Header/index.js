@@ -6,57 +6,33 @@ import Switch from "@mui/material/Switch";
 import { toast } from "react-toastify";
 
 function Header() {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") == "dark" ? true : false
-  );
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("theme") == "dark") {
-      setDark();
-    } else {
-      setLight();
-    }
+    const theme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", theme);
+    setDarkMode(theme === "dark");
   }, []);
 
   const changeMode = () => {
-    if (localStorage.getItem("theme") != "dark") {
-      setDark();
-    } else {
-      setLight();
-    }
+    const newTheme = darkMode ? "light" : "dark";
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
     setDarkMode(!darkMode);
     toast.success("Theme Changed!");
-  };
-
-  const setDark = () => {
-    localStorage.setItem("theme", "dark");
-    document.documentElement.setAttribute("data-theme", "dark");
-  };
-
-  const setLight = () => {
-    localStorage.setItem("theme", "light");
-    document.documentElement.setAttribute("data-theme", "light");
   };
 
   return (
     <div className="header">
       <h1>
-        TradeXis<span style={{ color: "var(--blue)" }}></span>
+        TradeXis<span style={{ color: "var(--blue)" }}> Pro</span>
       </h1>
       <div className="links">
-        <Switch checked={darkMode} onClick={() => changeMode()} />
-        <a href="/">
-          <p className="link">Home</p>
-        </a>
-        <a href="/compare">
-          <p className="link">Compare</p>
-        </a>
-        <a href="/watchlist">
-          <p className="link">Watchlist</p>
-        </a>
-        <a href="/dashboard">
-          <Button text={"dashboard"} />
-        </a>
+        <Switch checked={darkMode} onChange={changeMode} />
+        <a href="/"><p className="link">Home</p></a>
+        <a href="/compare"><p className="link">Compare</p></a>
+        <a href="/watchlist"><p className="link">Watchlist</p></a>
+        <a href="/dashboard"><Button text="Dashboard" /></a>
       </div>
       <div className="drawer-component">
         <TemporaryDrawer />

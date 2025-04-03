@@ -21,7 +21,7 @@ function Grid({ coin, delay }) {
         transition={{ duration: 0.5, delay: delay }}
       >
         <div className="img-flex">
-          <img src={coin.image} className="coin-image" />
+          <img src={coin.image} className="coin-image" alt="coin-image" />
           <div className="icon-flex">
             <div className="info-flex">
               <p className="coin-symbol">{coin.symbol}</p>
