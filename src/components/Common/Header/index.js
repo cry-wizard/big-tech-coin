@@ -29,7 +29,7 @@ function Header() {
       </h1>
       <div className="links">
         <Switch checked={darkMode} onChange={changeMode} />
-        <a href="/"><p className="link">Home</p></a>
+        <a href="/https://v0-crypto-landing-page-0gnwsk.vercel.app/"><p className="link">Home</p></a>
         <a href="/compare"><p className="link">Compare</p></a>
         <a href="/watchlist"><p className="link">Watchlist</p></a>
         <a href="/dashboard"><Button text="Dashboard" /></a>
