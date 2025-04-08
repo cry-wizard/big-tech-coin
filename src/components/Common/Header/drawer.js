@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { IconButton } from "@mui/material";
+import { IconButton, TextField, Button } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import { toast } from "react-toastify";
 
@@ -10,6 +10,9 @@ export default function TemporaryDrawer() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
+  const [isSignIn, setIsSignIn] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
@@ -39,6 +42,16 @@ export default function TemporaryDrawer() {
     document.documentElement.setAttribute("data-theme", "light");
   };
 
+  const toggleForm = () => {
+    setIsSignIn(!isSignIn);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle sign in/up logic here
+    toast.success(isSignIn ? "Signed In!" : "Signed Up!");
+  };
+
   return (
     <div>
       <IconButton onClick={() => setOpen(true)}>
@@ -59,6 +72,33 @@ export default function TemporaryDrawer() {
             <p className="link">Dashboard</p>
           </a>
           <Switch checked={darkMode} onClick={changeMode} />
+          <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <TextField
+              label="Password"
+              type="password"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              {isSignIn ? "Sign In" : "Sign Up"}
+            </Button>
+            <Button onClick={toggleForm} color="secondary" fullWidth>
+              {isSignIn ? "Switch to Sign Up" : "Switch to Sign In"}
+            </Button>
+          </form>
         </div>
       </Drawer>
     </div>

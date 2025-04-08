@@ -25,7 +25,7 @@ function Header() {
   return (
     <div className="header">
       <h1>
-        TradeXis<span style={{ color: "var(--blue)" }}> Pro</span>
+        TradeXis
       </h1>
       <div className="links">
         <Switch checked={darkMode} onChange={changeMode} />
